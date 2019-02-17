@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>New Tab</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="assets/css/style.css">
+        <!-- Icon -->
+        <link rel="shortcut icon" href="https://duckduckgo.com/favicon.ico" type="image/x-icon">
+        <!-- JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="background"></div>
+        <div class="content">
+            <div class="settings">
+                <select id="theme">
+                    <option id="themeOption">Astronomy</option>
+                    <option id="themeOption">Cats</option>
+                    <option id="themeOption">City</option>
+                    <option id="themeOption">Dogs</option>
+                    <option id="themeOption">Foxes</option>
+                    <option id="themeOption">Gaming</option>
+                    <option id="themeOption">Military</option>
+                    <option id="themeOption">Nature</option>
+                    <option id="themeOption">Color</option>
+                </select>
+                <select id="searchEngine">
+                    <option id="engineOption">duckduckgo.com</option>
+                    <option id="engineOption">google.com</option>
+                    <option id="engineOption">yahoo.com</option>
+                    <option id="engineOption">bing.com</option>
+                </select>
+                <div class="input"><input type="checkbox" id="blur" name="blur"> <label for="blur" class="text">Blur</label></div> 
+            </div>
+            <div class="wrapper">
+                <div class="searchbox autocomplete">
+                    <input type="text" id="search" placeholder="Search here..." autocomplete="off" autofocus>
+                    <button class="bookmarkButton"><img class="bkmrkImg" style="height:19px !important; line-height: 19px; vertical-align: middle"></button>
+                    <button onclick="search('search')">Search</button>
+                </div>
+            </div>
+            <div class="bookmarks"></div>
+        </div>
+        <!-- JavaScript -->
+        <script src="assets/js/main.js"></script>
+        <script src="assets/js/autocomplete.js"></script>
+        <script src="assets/js/options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </body>
+</html>
