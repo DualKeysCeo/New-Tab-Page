@@ -1,0 +1,12 @@
+
+GUI:
+    ☐ Color background @40m
+    ☐ Favorite a background so it always shows
+    ☐ Dynamic bookmarks, "%search%" gets replaced with engine's search so if you change your engine the search changes too
+    ☐ Add "- Search" after non url bookmarks @5m
+
+
+Archive:
+    ✔ Add bookmarks @1h30m @started(19-02-15 22:19) @done(19-02-16 00:22) @lasted(2h3m16s) @project(Functionality)
+    ✔ Add blur @10m @started(19-02-15 21:25) @done(19-02-15 22:17) @lasted(52m43s) @project(Functionality)
+    ✔ add more themes @started(19-02-15 20:51) @done(19-02-15 21:19) @lasted(28m50s) @project(GUI)
