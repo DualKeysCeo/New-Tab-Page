@@ -17,17 +17,20 @@
         <div id="background"></div>
         <div class="content">
             <div class="settings">
-                <select id="theme">
-                    <option id="themeOption">Astronomy</option>
-                    <option id="themeOption">Cats</option>
-                    <option id="themeOption">City</option>
-                    <option id="themeOption">Dogs</option>
-                    <option id="themeOption">Foxes</option>
-                    <option id="themeOption">Gaming</option>
-                    <option id="themeOption">Military</option>
-                    <option id="themeOption">Nature</option>
-                </select>
-                <select id="searchEngine">
+                <div class="group">
+                    <button class="favoriteButton input"><img class="favImg text" style="height:13px !important; line-height: 13px; vertical-align: middle"></button>
+                    <select id="theme" class="input">
+                        <option id="themeOption">Astronomy</option>
+                        <option id="themeOption">Cats</option>
+                        <option id="themeOption">City</option>
+                        <option id="themeOption">Dogs</option>
+                        <option id="themeOption">Foxes</option>
+                        <option id="themeOption">Gaming</option>
+                        <option id="themeOption">Military</option>
+                        <option id="themeOption">Nature</option>
+                    </select>
+                </div>
+                <select id="searchEngine" class="input">
                     <option id="engineOption">duckduckgo.com</option>
                     <option id="engineOption">google.com</option>
                     <option id="engineOption">yahoo.com</option>
@@ -38,8 +41,8 @@
             <div class="wrapper">
                 <div class="searchbox autocomplete">
                     <input type="text" id="search" placeholder="Search here..." autocomplete="off" autofocus>
-                    <button class="bookmarkButton"><img class="bkmrkImg" style="height:19px !important; line-height: 19px; vertical-align: middle"></button>
-                    <button onclick="search('search')">Search</button>
+                    <button class="bookmarkButton searchBtn"><img class="bkmrkImg" style="height:19px !important; line-height: 19px; vertical-align: middle"></button>
+                    <button onclick="search('search')" class="searchBtn">Search</button>
                 </div>
             </div>
             <div class="bookmarks"></div>

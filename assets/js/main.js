@@ -26,7 +26,7 @@ const search = (id) => {
     if (!isLink(str)) {
         window.location.href = xxxlocation + encodeURI(str);
     } else {
-        str = str.toLowerCase()
+        str = str.toLowerCase();
         if (str.startsWith("http://")) {
             window.location.href = "https://" + str.split("http://")[1];
         } else if (!str.startsWith("https") && !str.startsWith("file://") && !str.startsWith("localhost")) {
@@ -37,7 +37,7 @@ const search = (id) => {
             window.location.href = str;
         }
     }
-}
+};
 
 let isLink = (string) => {
     if (string.startsWith("http")) return true;                                             //# if http or https link
@@ -48,10 +48,10 @@ let isLink = (string) => {
         if (string.endsWith(tlds[i].toLowerCase()) && !string.includes(" ")) return true;   //# if ends with a tld after getting rid of ports and paths
     }
     return false;
-} 
+}; 
 
 document.addEventListener("keyup", (e) => {
     if (e.keyCode === 13) {
         search("search");
     }
-})
+});

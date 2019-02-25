@@ -3,17 +3,14 @@
 html,
 body {
     font-family: "Raleway", "Open Sans", sans-serif;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
     padding: 0;
     margin: 0
 }
 
 #background {
     position: fixed;
-    left: 0;
-    right: 0;
+    background-size: cover;
+    background-position: center center;
     z-index: -1;
 
     display: block;
@@ -64,10 +61,13 @@ body {
 button {
     border-radius: 0px 10px 10px 0px;
     background-color: #eee;
-    height: 55px !important;
+    height: 55px;
     padding: 5px 15px;
     font-size: 20px;
     border: none;
+}
+
+.searchBtn {
     width: 15%;
 }
 
@@ -100,6 +100,7 @@ button {
 
 select {
     border: none;
+    appearance: none;
     border-radius: 3px;
 }
 
@@ -112,6 +113,36 @@ select:hover {
     font-family: sans-serif;
 }
 
+.input {
+    -webkit-appearance: menulist-text;
+    padding: 0 5px;
+    margin: 10px;
+    display: inline-block;
+    background: white;
+    height: 17px !important;
+    border-radius: 3px;
+}
+
+.favoriteButton {
+    border-radius: 3px 0 0 3px;
+    line-height: 17px;
+    margin-right: 0;
+    vertical-align: top;
+    background: #fff;
+}
+
+#theme {
+    border-radius: 0 3px 3px 0;
+    margin-left: 0;
+}
+
+.favoriteButton:hover > .favImg {
+    background: url("../img/star-solid.svg");
+}
+
+.favoriteButton:hover {
+    background: #eee;
+}
 
 .bookmarkButton {
     width: 50px !important;
@@ -127,17 +158,8 @@ select:hover {
     background: #eee;
 }
 
-.input {
-    -webkit-appearance: menulist-text;
-    padding: 0 5px;
-    margin: 10px;
-    display: inline-block;
-    background: white;
-    height: 17px !important;
-    border-radius: 3px;
-}
 
-input[type=checkbox] {
+input[type=checkbox], button {
     margin: 0;
 }
 
@@ -186,6 +208,37 @@ input[type=checkbox] {
     z-index: 999;
 }
 
+.settings {
+    width: calc(100vw);
+    margin: 0;
+    display: flex;
+    * {
+        justify-content: space-evenly !important;
+        display: inline-flex;
+    }
+}
+
 select {
     margin: 7px 10px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .bookmarkButton {
+        display: none;
+    }
+    .searchBtn {
+        width: 25vw;
+    }
+    #search {
+        width: 35vw;
+    }
+
+    #search:focus ~ .searchBtn {
+        display: none;
+        
+    }
+    #search:focus {
+        width: 60vw !important;
+        border-radius: 10px;
+    }
 }
