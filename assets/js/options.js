@@ -88,7 +88,7 @@ $(function () {
         favChecked = true;
         var options = $("#theme").children();
         for (var i = 0; i < options.length; i++) {
-            if (options[i].value === favCookie) {
+            if (options[i].value === favCookie.split("/")[0]) {
                 options[i].outerHTML = `<option id="themeOptions" selected>${options[i].innerHTML}</option>`;
             }
         }
@@ -220,6 +220,7 @@ select.onchange = (event) => {
 engine.onchange = (event) => {
     localStorage.setItem("engine", event.target.value);
     $("link")[1].href = "https://" + engine.value + "/favicon.ico";
+    setEngine();
 };
 
 blur.onchange = (event) => {

@@ -88,7 +88,6 @@ button {
 }
 select {
   border: none;
-  appearance: none;
   border-radius: 3px;
 }
 select:hover {
@@ -99,7 +98,6 @@ select:hover {
   font-family: sans-serif;
 }
 .input {
-  -webkit-appearance: menulist-text;
   padding: 0 5px;
   margin: 10px;
   display: inline-block;
@@ -114,15 +112,25 @@ select:hover {
   vertical-align: top;
   background: #fff;
 }
-#theme {
-  border-radius: 0 3px 3px 0;
-  margin-left: 0;
-}
 .favoriteButton:hover > .favImg {
   background: url("../img/star-solid.svg");
 }
 .favoriteButton:hover {
   background: #eee;
+}
+.newBg {
+  border-radius: 0 3px 3px 0;
+  line-height: 17px;
+  margin-left: 0;
+  vertical-align: top;
+  background: #fff;
+}
+.newBg:hover {
+  background: #eee;
+}
+#theme {
+  border-radius: 0;
+  margin: 10px 0;
 }
 .bookmarkButton {
   width: 50px !important;
@@ -191,6 +199,9 @@ select {
   margin: 7px 10px;
 }
 @media only screen and (max-width: 1000px) {
+  .bookmarks {
+    display: none;
+  }
   .bookmarkButton {
     display: none;
   }

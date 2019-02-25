@@ -4,22 +4,23 @@ $.getJSON("assets/json/info.json", (json) => {
 });
 
 let xxxlocation;
-var engineTemp = localStorage.getItem("engine");    
-switch (engineTemp) {
-    case "google.com":
-        xxxlocation = "https://google.com/search?q=";
-        break;
-    case "yahoo.com":
-        xxxlocation = "https://search.yahoo.com/search?q=";
-        break;
-    case "bing.com":
-        xxxlocation = "https://bing.com/search?q=";
-        break;
-    default:
-        xxxlocation = "https://duckduckgo.com/?q=";
-        break;
+const setEngine = () => {
+    var engineTemp = localStorage.getItem("engine");
+    switch (engineTemp) {
+        case "google.com":
+            xxxlocation = "https://google.com/search?q=";
+            break;
+        case "yahoo.com":
+            xxxlocation = "https://search.yahoo.com/search?q=";
+            break;
+        case "bing.com":
+            xxxlocation = "https://bing.com/search?q=";
+            break;
+        default:
+            xxxlocation = "https://duckduckgo.com/?q=";
+            break;
+    }
 }
-
 const search = (id) => {
     var str = document.getElementById(id).value.toLowerCase();
 
