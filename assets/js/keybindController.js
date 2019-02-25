@@ -16,10 +16,13 @@ const KeyPress = (e) => {
                 bkmrkChecked = true;
             }
             break;
-        case 82:
-            background(select.value);
+        case 18:
+            colorTheme(dark);
+            break;
+        default:
+            console.log(e.keyCode);
             break;
     }
 }
 
-searchBox.onkeyup = KeyPress;
+document.onkeyup = KeyPress;

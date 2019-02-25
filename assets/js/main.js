@@ -21,6 +21,9 @@ const setEngine = () => {
             break;
     }
 }
+
+setEngine();
+
 const search = (id) => {
     var str = document.getElementById(id).value.toLowerCase();
 

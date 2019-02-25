@@ -6,6 +6,9 @@ let bookmarkButton = $(".bookmarkButton")[0];
 let favoriteButton = $(".favoriteButton")[0];
 let bkmrkChecked = false;
 let favChecked = false;
+let darkmode = $(".darkMode")[0];
+let dark = false;
+let bookmarks = localStorage.getItem("bookmarks").split(";");
 
 let currentBack;
 let favBack;
@@ -37,18 +40,16 @@ const addBookmark = (value) => {
     bookmark.innerHTML = `<a href="${linkValue}">${linkName}</a>`;
     getBookmarks()[0].appendChild(bookmark);
     if (bookmarks) {
-        localStorage.setItem("bookmarks", bookmarks + value + ";");
+        localStorage.setItem("bookmarks", bookmarks.join(";") + value + ";");
     } else {
         localStorage.setItem("bookmarks", value + ";");
     }
 };
 
 const removeBookmark = (value) => {
-    bookmarks = bookmarks.split(";");
     if (bookmarks.includes(value)) {
         var index = bookmarks.indexOf(value);
         if (index > -1) {
-            bookmarks.splice(index, 1);
             localStorage.setItem("bookmarks", bookmarks.join(";"));
             for (var i = 0; i < $(".bookmark").length; i++) {
                 if ($(".bookmark")[i].innerHTML.includes(value))
@@ -67,11 +68,91 @@ const background = (_background, fav = false) => {
         $("#background").css("background-image", `url('assets/img/${currentBack}')`);
 };
 
+const colorTheme = (dark) => {
+    var background,
+        color;
+    if (dark) {
+        background = "#222";
+        color = "#eee";
+        invert = 1;
+    } else {
+        background = "#fff";
+        color = "black";
+        invert = 0;
+    }
+    var settings = $(".settings").children();
+    for (var i = 0; i < settings.length; i++) {
+        if (settings[i].localName === "button") {
+            try { settings[i].children[0].style.filter = "invert("+invert+")"; } 
+            catch (error) { settings[i].style.color = color; }
+        }
+        settings[i].style.background = background;
+        settings[i].style.color = color;
+    }
+    var wrapper = $(".searchbox").children();
+    for (var i = 0; i < wrapper.length; i++) {
+        if (wrapper[i].localName === "button") {
+            try { wrapper[i].children[0].style.filter = "invert("+invert+")"; } 
+            catch (error) { wrapper[i].style.color = color; }
+        }
+        wrapper[i].style.background = background;
+        wrapper[i].style.color = color;
+    }
+    for (var i = 0; i < bookmarks.length; i++) {
+        if (bookmarks[i] !== "") {
+            $(".bookmarks").children()[i].style.background = background;
+            $(".bookmarks").children()[i].children[0].style.color = color;
+        }
+    }
+}
+
 $(function () {
     let themeCookie = localStorage.getItem("theme");
     let engineCookie = localStorage.getItem("engine");
     let blurCookie = localStorage.getItem("blur");
     let favCookie = localStorage.getItem("favBack");
+    let darkCookie = localStorage.getItem("dark");
+
+    //# bookmark stuff
+    if (bookmarks) {
+        $(".bkmrkImg")[0].src = "assets/img/bookmark-regular.svg";
+        bookmarks.forEach((value) => {
+            var linkValue = value;
+            var linkName = value;
+            if (!isLink(linkValue)) {
+                linkName += " - Search";
+                linkValue = xxxlocation + encodeURI(linkValue);
+            } else {
+                linkValue = linkValue.toLowerCase();
+                if (linkValue.startsWith("http://")) {
+                    linkValue = "https://" + linkValue.split("http://")[1];
+                } else if (!linkValue.startsWith("https") && !linkValue.startsWith("file://") && !linkValue.startsWith("localhost")) {
+                    linkValue = "https://" + linkValue;
+                } else if (linkValue.startsWith("localhost")) {
+                    linkValue = "http://localhost";
+                }
+            }
+            if (value !== "") {
+                var bookmarkItem = document.createElement("div");
+                bookmarkItem.className = "bookmark";
+                bookmarkItem.innerHTML = `<a href="${linkValue}">${linkName}</a>`;
+                getBookmarks()[0].appendChild(bookmarkItem);
+            }
+        });
+    } else {
+        $(".bkmrkImg")[0].src = "assets/img/bookmark-regular.svg";
+        bookmarks = [];
+        localStorage.setItem("bookmarks", "");
+    }
+
+    //# Dark mode
+    if (darkCookie === "true") {
+        $(".darkImg")[0].src = "assets/img/moon-solid.svg";
+        colorTheme(true);
+    } else {
+        $(".darkImg")[0].src = "assets/img/moon-regular.svg";
+        colorTheme(false);
+    }
 
     //# Blur cookie stuff
     if (blurCookie === "true") {
@@ -84,6 +165,7 @@ $(function () {
 
     //# Favorite cookie stuff
     if (favCookie) {
+        $(".favImg")[0].src = "assets/img/star-solid.svg";
         background(favCookie, true);
         favChecked = true;
         var options = $("#theme").children();
@@ -93,6 +175,7 @@ $(function () {
             }
         }
     } else {
+        $(".favImg")[0].src = "assets/img/star-regular.svg";
         localStorage.setItem("favBack", "");
     }
 
@@ -122,68 +205,6 @@ $(function () {
         localStorage.setItem("theme", select.value);
         background(select.value);
     }
-
-    //# bookmark stuff
-    let bookmarks = localStorage.getItem("bookmarks");
-    if (bookmarks) {
-        bookmarks = bookmarks.split(";");
-        bookmarks.forEach((value) => {
-            var linkValue = value;
-            var linkName = value;
-            if (!isLink(linkValue)) {
-                linkName += " - Search";
-                linkValue = xxxlocation + encodeURI(linkValue);
-            } else {
-                linkValue = linkValue.toLowerCase();
-                if (linkValue.startsWith("http://")) {
-                    linkValue = "https://" + linkValue.split("http://")[1];
-                } else if (!linkValue.startsWith("https") && !linkValue.startsWith("file://") && !linkValue.startsWith("localhost")) {
-                    linkValue = "https://" + linkValue;
-                } else if (linkValue.startsWith("localhost")) {
-                    linkValue = "http://localhost";
-                }
-            }
-            if (value !== "") {
-                var bookmarkItem = document.createElement("div");
-                bookmarkItem.className = "bookmark";
-                bookmarkItem.innerHTML = `<a href="${linkValue}">${linkName}</a>`;
-                getBookmarks()[0].appendChild(bookmarkItem);
-            }
-        });
-    } else {
-        bookmarks = [];
-        localStorage.setItem("bookmarks", "");
-    }
-});
-
-var lastChanged = "";
-setInterval(() => {
-    if (lastChanged !== searchBox.value && searchBox.value !== "") {
-        lastChanged = searchBox.value;
-        var split = bookmarks.split(";");
-        for (var i = 0; i < split.length; i++) {
-            if (split[i] === searchBox.value) {
-                bkmrkChecked = true;
-                return;
-            } else {
-                bkmrkChecked = false;
-            }
-        }
-    }
-
-    if (bkmrkChecked) {
-        $(".bkmrkImg")[0].src = "assets/img/bookmark-solid.svg";
-    } else {
-        $(".bkmrkImg")[0].src = "assets/img/bookmark-regular.svg";
-    }
-
-    if (favChecked) {
-        $(".favImg")[0].src = "assets/img/star-solid.svg";
-    } else {
-        $(".favImg")[0].src = "assets/img/star-regular.svg";
-    }
-
-    bookmarks = localStorage.getItem("bookmarks");
 });
 
 bookmarkButton.onclick = (event) => {
@@ -192,19 +213,55 @@ bookmarkButton.onclick = (event) => {
         bkmrkChecked = false;
         return;
     }
-    if (bkmrkChecked === false) {
+    if (!bkmrkChecked) {
+        $(".bkmrkImg")[0].src = "assets/img/bookmark-regular.svg";
         removeBookmark(searchBox.value);
     } else {
+        $(".bkmrkImg")[0].src = "assets/img/bookmark-solid.svg";
         addBookmark(searchBox.value);
+        bookmarks = localStorage.getItem("bookmarks");
     }
 };
 
+var lastChanged = "";
+setInterval(() => {
+    if (lastChanged !== searchBox.value && searchBox.value !== "") {
+        lastChanged = searchBox.value;
+        var split = bookmarks;
+        for (var i = 0; i < split.length; i++) {
+            if (split[i] === searchBox.value) {
+                bkmrkChecked = true;
+                $(".bkmrkImg")[0].src = "assets/img/bookmark-solid.svg";
+                return;
+            } else {
+                bkmrkChecked = false;
+                $(".bkmrkImg")[0].src = "assets/img/bookmark-regular.svg";
+            }
+        }
+    }
+});
+
+darkmode.onclick = (event) => {
+    dark = !dark;
+    if (dark) {
+        $(".darkImg")[0].src = "assets/img/moon-solid.svg";
+        colorTheme(true);
+        localStorage.setItem("dark", true);
+    } else {
+        $(".darkImg")[0].src = "assets/img/moon-regular.svg";
+        localStorage.setItem("dark", false);
+        colorTheme(false);
+    }
+}
+
 favoriteButton.onclick = (event) => {
     favChecked = !favChecked;
-    if (favChecked === true) {
+    if (favChecked) {
+        $(".favImg")[0].src = "assets/img/star-solid.svg";
         favBack = currentBack;
         localStorage.setItem("favBack", currentBack);
     } else {
+        $(".favImg")[0].src = "assets/img/star-regular.svg";
         localStorage.setItem("favBack", "");
         favBack = "";
     }
@@ -233,3 +290,4 @@ blur.onchange = (event) => {
     }
     localStorage.setItem("blur", event.target.checked);
 };
+
